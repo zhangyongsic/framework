@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="framework-ali-oss" />
+        <module name="framework-ali-oss-stater" />
+        <module name="framework-encrypt" />
+        <module name="framework-lib" />
+        <module name="framework-mybatisplus" />
+        <module name="framework-redis" />
+        <module name="framework-shiro" />
+        <module name="framework-swagger" />
+        <module name="framework-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="framework" target="1.8" />
+      <module name="framework-ali" target="1.8" />
+      <module name="framework-ali-oss" target="1.8" />
+      <module name="framework-ali-oss-stater" target="1.8" />
+      <module name="framework-encrypt" target="1.8" />
+      <module name="framework-lib" target="1.8" />
+      <module name="framework-mybatisplus" target="1.8" />
+      <module name="framework-redis" target="1.8" />
+      <module name="framework-shiro" target="1.8" />
+      <module name="framework-stater" target="1.8" />
+      <module name="framework-swagger" target="1.8" />
+      <module name="framework-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

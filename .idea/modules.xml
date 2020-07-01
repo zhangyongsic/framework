@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/framework.iml" filepath="$PROJECT_DIR$/framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-ali/framework-ali.iml" filepath="$PROJECT_DIR$/framework-ali/framework-ali.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-ali/framework-ali-oss/framework-ali-oss.iml" filepath="$PROJECT_DIR$/framework-ali/framework-ali-oss/framework-ali-oss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-stater/framework-ali-oss-stater/framework-ali-oss-stater.iml" filepath="$PROJECT_DIR$/framework-stater/framework-ali-oss-stater/framework-ali-oss-stater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-encrypt/framework-encrypt.iml" filepath="$PROJECT_DIR$/framework-encrypt/framework-encrypt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-lib/framework-lib.iml" filepath="$PROJECT_DIR$/framework-lib/framework-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-mybatisplus/framework-mybatisplus.iml" filepath="$PROJECT_DIR$/framework-mybatisplus/framework-mybatisplus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-redis/framework-redis.iml" filepath="$PROJECT_DIR$/framework-redis/framework-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-shiro/framework-shiro.iml" filepath="$PROJECT_DIR$/framework-shiro/framework-shiro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-stater/framework-stater.iml" filepath="$PROJECT_DIR$/framework-stater/framework-stater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-swagger/framework-swagger.iml" filepath="$PROJECT_DIR$/framework-swagger/framework-swagger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-web/framework-web.iml" filepath="$PROJECT_DIR$/framework-web/framework-web.iml" />
+    </modules>
+  </component>
+</project>
