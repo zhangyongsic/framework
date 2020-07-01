@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zhangyongsic.framework</groupId>
+    <artifactId>framework</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>framework-ali</module>
+        <module>framework-stater</module>
+        <module>framework-lib</module>
+        <module>framework-shiro</module>
+        <module>framework-web</module>
+        <module>framework-encrypt</module>
+        <module>framework-redis</module>
+        <module>framework-mybatisplus</module>
+        <module>framework-swagger</module>
+
+    </modules>
+
+    <properties>
+        <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
+        <lombok.version>1.18.8</lombok.version>
+        <shiro.version>1.4.0</shiro.version>
+        <jwt.version>0.9.0</jwt.version>
+
+        <commons-lang.version>3.6</commons-lang.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <commons-pool2.version>2.5.0</commons-pool2.version>
+
+        <bcpkix.version>1.60</bcpkix.version>
+
+        <fastjson.version>1.2.47</fastjson.version>
+        <jackson.version>2.10.3</jackson.version>
+
+        <tomcat-embed-jasper.version>9.0.33</tomcat-embed-jasper.version>
+        <springfox-swagger.version>2.7.0</springfox-swagger.version>
+        <guava.version>23.0</guava.version>
+
+        <druid.version>1.1.12</druid.version>
+        <mysql.version>8.0.12</mysql.version>
+        <mybatisplus.version>3.1.2</mybatisplus.version>
+        <freemarker.version>2.3.28</freemarker.version>
+
+        <log4j2.version>2.11.0</log4j2.version>
+        <slf4j.version>1.7.25</slf4j.version>
+
+    </properties>
+
+    <build>
+        <plugins>
+            <!-- 编译源代码 / 指定jdk编译版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <updateReleaseInfo>true</updateReleaseInfo>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
