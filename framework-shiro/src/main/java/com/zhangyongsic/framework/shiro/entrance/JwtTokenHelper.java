@@ -26,22 +26,9 @@ public class JwtTokenHelper {
         }
     }
 
-    public static void tokenAuthc(String jwtPrivateKey, String token) {
+    public static void tokenAuth(String jwtPrivateKey, String token) {
         try {
             JwtFactory.parserJwtTokenSubject(jwtPrivateKey, token);
-        } catch (SignatureException e) {
-            throw new BusinessException(BaseCode.NO_AUTH);
-        } catch (ExpiredJwtException e) {
-            throw new BusinessException(BaseCode.NO_AUTH);
-        } catch (Exception e) {
-            throw new BusinessException(BaseCode.NO_AUTH);
-        }
-    }
-
-
-    public static void refreshTokenAuthc(String jwtPrivateKey, String refreshToken) {
-        try {
-            JwtFactory.parserJwtTokenSubject(jwtPrivateKey, refreshToken);
         } catch (SignatureException e) {
             throw new BusinessException(BaseCode.NO_AUTH);
         } catch (ExpiredJwtException e) {

@@ -50,17 +50,7 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
         if (StringUtils.isEmpty(token)) {
             throw new BusinessException(BaseCode.NO_AUTH);
         }
-        // userId
-        JwtPayload payload = JwtTokenHelper.getJwtPayload(token);
-
-        String userId = payload.getSub();
-        String cacheKey = payload.getIss();
-        // 根据userId获取principal
-        UserPrincipal userPrincipal = principalSupport.getPrincipal(cacheKey,userId);
-        if (userPrincipal == null) {
-            throw new BusinessException(BaseCode.NO_AUTH);
-        }
-        JwtTokenHelper.tokenAuthc(userPrincipal.getJwtPrivateKey(), token);
+        UserPrincipal userPrincipal = principalSupport.getPrincipalByToken(token);
         return new SimpleAuthenticationInfo(userPrincipal, token, userPrincipal.getUserName());
     }
 

@@ -46,16 +46,7 @@ public class TokenBuilder {
      * @return
      */
     public TokenVO refreshToken(String refreshToken) {
-        JwtPayload payload = JwtTokenHelper.getJwtPayload(refreshToken);
-        String userId = payload.getSub();
-        String cacheKey = payload.getIss();
-        UserPrincipal userPrincipal = principalSupport.getPrincipal(cacheKey,userId);
-        if (userPrincipal == null) {
-            throw new BusinessException(BaseCode.NO_AUTH);
-        }
-        // 认证refreshToken
-        JwtTokenHelper.refreshTokenAuthc(userPrincipal.getJwtPrivateKey(), refreshToken);
-        // 创建新的 jwtToken
+        UserPrincipal userPrincipal = principalSupport.getPrincipalByToken(refreshToken);
         return createJwtToken(userPrincipal);
 
     }
@@ -67,5 +58,4 @@ public class TokenBuilder {
         token.setExpireTime(jwtToken.getExpireTime());
         return token;
     }
-
 }
