@@ -52,15 +52,16 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
         }
         // userId
         JwtPayload payload = JwtTokenHelper.getJwtPayload(token);
+
         String userId = payload.getSub();
         String cacheKey = payload.getIss();
         // 根据userId获取principal
-        UserPrincipal smdhPrincipal = principalSupport.getPrincipal(cacheKey,userId);
-        if (smdhPrincipal == null) {
+        UserPrincipal userPrincipal = principalSupport.getPrincipal(cacheKey,userId);
+        if (userPrincipal == null) {
             throw new BusinessException(BaseCode.NO_AUTH);
         }
-
-        return new SimpleAuthenticationInfo(smdhPrincipal, token, smdhPrincipal.getUserName());
+        JwtTokenHelper.tokenAuthc(userPrincipal.getJwtPrivateKey(), token);
+        return new SimpleAuthenticationInfo(userPrincipal, token, userPrincipal.getUserName());
     }
 
     /**
@@ -68,8 +69,10 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //log.debug("Jwt Realm 权限校验检查........");
-        return new SimpleAuthorizationInfo();
+        UserPrincipal userPrincipal = (UserPrincipal) principalCollection.getPrimaryPrincipal();
+        SimpleAuthorizationInfo info= new SimpleAuthorizationInfo();
+        info.setStringPermissions(userPrincipal.getPermissions());
+        return info;
     }
 
 

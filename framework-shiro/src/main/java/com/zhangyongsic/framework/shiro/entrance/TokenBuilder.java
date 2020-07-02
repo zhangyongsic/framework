@@ -4,7 +4,9 @@ import com.zhangyongsic.framework.encrypt.jwt.JwtFactory;
 import com.zhangyongsic.framework.encrypt.jwt.JwtPayload;
 import com.zhangyongsic.framework.encrypt.jwt.JwtToken;
 import com.zhangyongsic.framework.lib.constant.BaseCode;
+import com.zhangyongsic.framework.lib.constant.SystemConstant;
 import com.zhangyongsic.framework.lib.exception.BusinessException;
+import com.zhangyongsic.framework.shiro.helper.ShiroPropertiesHelper;
 import com.zhangyongsic.framework.shiro.token.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,9 +29,11 @@ public class TokenBuilder {
      * @return
      */
     public TokenVO createJwtToken(UserPrincipal userPrincipal) {
+        String tokenExpire = ShiroPropertiesHelper.getInstance().getProperty(SystemConstant.Token.TOKEN_EXPIRE);
+        String refreshTokenExpire = ShiroPropertiesHelper.getInstance().getProperty(SystemConstant.Token.REFRESH_TOKEN_EXPIRE);
         // 生成 jwtToken
         JwtToken jwtToken = JwtFactory.createAccessToken(userPrincipal.getUserId(), userPrincipal.getCacheKey(),
-                userPrincipal.getJwtPrivateKey(), 12, 12);
+                userPrincipal.getJwtPrivateKey(), Integer.valueOf(tokenExpire), Integer.valueOf(refreshTokenExpire));
         // 保存 smdhPrincipal 到缓存
         principalSupport.putPrincipal(userPrincipal);
         return buildTokenVO(jwtToken);
