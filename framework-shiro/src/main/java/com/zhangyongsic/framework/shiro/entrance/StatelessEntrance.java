@@ -44,6 +44,10 @@ public class StatelessEntrance {
         return tokenBuilder.createJwtToken(userPrincipal);
     }
 
+    public void logout(){
+
+    }
+
 
     /**
      * 换取 refreshToken

@@ -62,6 +62,7 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
         UserPrincipal userPrincipal = (UserPrincipal) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo info= new SimpleAuthorizationInfo();
         info.setStringPermissions(userPrincipal.getPermissions());
+        info.setRoles(userPrincipal.getRoles());
         return info;
     }
 
