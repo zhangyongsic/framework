@@ -23,10 +23,12 @@ public class JwtAuthenticationToken implements AuthenticationToken {
         this.token = token;
     }
 
+    @Override
     public Object getPrincipal() {
         return this.token;
     }
 
+    @Override
     public Object getCredentials() {
         return this.token;
     }

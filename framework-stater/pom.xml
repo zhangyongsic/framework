@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>framework-ali-oss-stater</module>
+        <module>framework-ali-sms-stater</module>
     </modules>
 
     <dependencies>

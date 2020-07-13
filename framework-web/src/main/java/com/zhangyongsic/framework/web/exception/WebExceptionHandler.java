@@ -3,6 +3,8 @@ package com.zhangyongsic.framework.web.exception;
 import com.zhangyongsic.framework.lib.constant.BaseCode;
 import com.zhangyongsic.framework.lib.exception.BusinessException;
 import com.zhangyongsic.framework.web.RtnHttp;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @create: 2020/06/30
  */
 
+@Slf4j
 @ResponseBody
 @ControllerAdvice
 public class WebExceptionHandler {
@@ -28,6 +31,10 @@ public class WebExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public RtnHttp handleBusinessException(BusinessException ex) {
+        log.info("异常",ex);
+        if (StringUtils.isEmpty(ex.getCode())){
+            return RtnHttp.error(BaseCode.UNKNOWN);
+        }
         return RtnHttp.error(ex.getCode(),ex.getMessage());
     }
 
