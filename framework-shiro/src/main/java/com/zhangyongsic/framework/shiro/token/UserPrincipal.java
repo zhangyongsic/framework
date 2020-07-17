@@ -20,4 +20,7 @@ public class UserPrincipal implements Serializable {
     private String jwtPrivateKey;
     private Set<String> permissions;
     private Set<String> roles;
+    private LeaderPrincipal leaderPrincipal;
+
+
 }

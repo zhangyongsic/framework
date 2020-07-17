@@ -1,5 +1,6 @@
 package com.zhangyongsic.framework.shiro.entrance;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.zhangyongsic.framework.encrypt.jwt.JwtPayload;
 import com.zhangyongsic.framework.lib.constant.BaseCode;
 import com.zhangyongsic.framework.lib.exception.BusinessException;
@@ -57,5 +58,18 @@ public class PrincipalSupport {
 
     public void putPrincipal(UserPrincipal userPrincipal){
         redisTemplate.opsForHash().put(userPrincipal.getCacheKey(),userPrincipal.getUserId(),userPrincipal);
+    }
+
+    public String getUserId(){
+        if (getPrincipal()!=null){
+            return getPrincipal().getUserId();
+        }return null;
+    }
+
+    public String getLeaderId(){
+        if (getPrincipal() !=null && getPrincipal().getLeaderPrincipal()!= null){
+            return getPrincipal().getLeaderPrincipal().getLeaderId();
+        }
+        return null;
     }
 }

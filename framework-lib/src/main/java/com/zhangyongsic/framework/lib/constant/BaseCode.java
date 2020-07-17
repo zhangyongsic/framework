@@ -11,6 +11,7 @@ import com.zhangyongsic.framework.lib.exception.BusinessCode;
 public enum BaseCode implements BusinessCode {
     OK("0","成功"),
     UNKNOWN("UNKNOWN","未知异常"),
+    BUSY("BUSY","业务忙"),
     NO_AUTH("NO_AUTH","未登录"),
     USERNAME_OR_PASSWORD_ERROR("USERNAME_OR_PASSWORD_ERROR","用户名密码错误"),
     ;
@@ -21,10 +22,12 @@ public enum BaseCode implements BusinessCode {
         this.message = message;
     }
 
+    @Override
     public String getCode() {
         return code;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }
