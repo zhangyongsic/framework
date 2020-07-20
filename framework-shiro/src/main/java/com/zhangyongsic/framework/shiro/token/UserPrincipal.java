@@ -14,13 +14,13 @@ import java.util.Set;
 @Data
 public class UserPrincipal implements Serializable {
     private String userId;
+    private String userType;
+    private String userStatus;
     private String cacheKey;
     private String userName;
     private String password;
     private String jwtPrivateKey;
     private Set<String> permissions;
     private Set<String> roles;
-    private LeaderPrincipal leaderPrincipal;
-
-
+    private String otherId;
 }

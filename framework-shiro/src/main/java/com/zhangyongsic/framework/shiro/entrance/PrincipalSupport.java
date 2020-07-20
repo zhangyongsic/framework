@@ -29,7 +29,11 @@ public class PrincipalSupport {
     public UserPrincipal getPrincipal(){
         try {
             Subject subject = SecurityUtils.getSubject();
-            return (UserPrincipal) subject.getPrincipal();
+            UserPrincipal userPrincipal =  (UserPrincipal) subject.getPrincipal();
+            if (userPrincipal == null) {
+                throw new BusinessException(BaseCode.NO_AUTH);
+            }
+            return userPrincipal;
         } catch (Exception e) {
             return null;
         }
@@ -66,9 +70,16 @@ public class PrincipalSupport {
         }return null;
     }
 
-    public String getLeaderId(){
-        if (getPrincipal() !=null && getPrincipal().getLeaderPrincipal()!= null){
-            return getPrincipal().getLeaderPrincipal().getLeaderId();
+    public String getOtherId(){
+        if (getPrincipal() !=null ){
+            return getPrincipal().getOtherId();
+        }
+        return null;
+    }
+
+    public String getUserType(){
+        if (getPrincipal() !=null ){
+            return getPrincipal().getUserType();
         }
         return null;
     }
