@@ -31,8 +31,7 @@ public class WebExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public RtnHttp handleBusinessException(BusinessException ex) {
-        log.info("异常",ex);
-        if (StringUtils.isEmpty(ex.getCode())){
+        if (StringUtils.isBlank(ex.getCode())){
             return RtnHttp.error(BaseCode.UNKNOWN);
         }
         return RtnHttp.error(ex.getCode(),ex.getMessage());

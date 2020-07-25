@@ -43,16 +43,12 @@ public class PageIn implements Serializable {
     @ApiModelProperty(value = "排序字段")
     private String orderBy;
 
-    /**
-     * 参数
-     */
     @ApiModelProperty
-    private Map<String, Object> params = Maps.newHashMap();
+    private String wd;
 
     @Override
     public String toString() {
-        return "PageIn [params=" + params +
-                ", pageNo=" + pageNo +
+        return "PageIn [pageNo=" + pageNo +
                 ", pageSize=" + pageSize +
                 ", sortOrder=" + sortOrder +
                 ", orderBy=" + orderBy
