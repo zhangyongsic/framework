@@ -22,5 +22,5 @@ public class UserPrincipal implements Serializable {
     private String jwtPrivateKey;
     private Set<String> permissions;
     private Set<String> roles;
-    private String otherId;
+    private CustomerPrincipal customerPrincipal;
 }

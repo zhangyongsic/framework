@@ -4,6 +4,8 @@ import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.zhangyongsic.framework.encrypt.jwt.JwtPayload;
 import com.zhangyongsic.framework.lib.constant.BaseCode;
 import com.zhangyongsic.framework.lib.exception.BusinessException;
+import com.zhangyongsic.framework.shiro.principal.IPrincipal;
+import com.zhangyongsic.framework.shiro.token.CustomerPrincipal;
 import com.zhangyongsic.framework.shiro.token.UserPrincipal;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -13,6 +15,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 /**
  * @program: framework
  * @description:
@@ -20,33 +24,31 @@ import org.springframework.stereotype.Component;
  * @create: 2020/06/3
  */
 @Component
-public class PrincipalSupport {
+public class PrincipalSupport implements IPrincipal {
 
     @Autowired
     @Qualifier("jacksonRedisTemplate")
     private RedisTemplate redisTemplate;
 
     public UserPrincipal getPrincipal(){
+        UserPrincipal userPrincipal = null;
         try {
             Subject subject = SecurityUtils.getSubject();
-            UserPrincipal userPrincipal =  (UserPrincipal) subject.getPrincipal();
-            if (userPrincipal == null) {
-                throw new BusinessException(BaseCode.NO_AUTH);
-            }
-            return userPrincipal;
+            userPrincipal =  (UserPrincipal) subject.getPrincipal();
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
+        if (userPrincipal == null) {
+            throw new BusinessException(BaseCode.NO_AUTH);
+        }
+        return userPrincipal;
     }
 
-    public UserPrincipal getPrincipalByToken(String token){
+    public UserPrincipal getPrincipal(String token){
         JwtPayload payload = JwtTokenHelper.getJwtPayload(token);
         String userId = payload.getSub();
         String cacheKey = payload.getIss();
         UserPrincipal userPrincipal = getPrincipal(cacheKey,userId);
-        if (userPrincipal == null) {
-            throw new BusinessException(BaseCode.NO_AUTH);
-        }
         // 认证refreshToken
         JwtTokenHelper.tokenAuth(userPrincipal.getJwtPrivateKey(), token);
         return userPrincipal;
@@ -54,32 +56,55 @@ public class PrincipalSupport {
 
     public UserPrincipal getPrincipal(String userKey, String userId){
         Object object = redisTemplate.opsForHash().get(userKey,userId);
-        if (object != null){
-            return (UserPrincipal) object;
+        if (object == null){
+            throw new BusinessException(BaseCode.NO_AUTH);
         }
-        return null;
+        return (UserPrincipal) object;
     }
 
     public void putPrincipal(UserPrincipal userPrincipal){
         redisTemplate.opsForHash().put(userPrincipal.getCacheKey(),userPrincipal.getUserId(),userPrincipal);
     }
 
-    public String getUserId(){
-        if (getPrincipal()!=null){
-            return getPrincipal().getUserId();
-        }return null;
+    @Override
+    public String getUserId() {
+        return getPrincipal().getUserId();
     }
 
-    public String getOtherId(){
-        if (getPrincipal() !=null ){
-            return getPrincipal().getOtherId();
-        }
-        return null;
+    @Override
+    public String getUserType() {
+        return getPrincipal().getUserType();
     }
 
-    public String getUserType(){
-        if (getPrincipal() !=null ){
-            return getPrincipal().getUserType();
+    @Override
+    public String getUserName() {
+        return getPrincipal().getUserName();
+    }
+
+    @Override
+    public String getPassword() {
+        return getPrincipal().getPassword();
+    }
+
+    @Override
+    public Set<String> getPermissions() {
+        return getPrincipal().getPermissions();
+    }
+
+    @Override
+    public Set<String> getRoles() {
+        return getPrincipal().getRoles();
+    }
+
+    @Override
+    public CustomerPrincipal getCustomerPrincipal() {
+        return getPrincipal().getCustomerPrincipal();
+    }
+
+    @Override
+    public String getCustomerId() {
+        if (getCustomerPrincipal()!=null){
+            return getCustomerPrincipal().getCustomerId();
         }
         return null;
     }

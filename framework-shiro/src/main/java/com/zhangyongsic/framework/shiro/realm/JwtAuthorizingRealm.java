@@ -3,6 +3,7 @@ package com.zhangyongsic.framework.shiro.realm;
 
 import com.zhangyongsic.framework.encrypt.jwt.JwtPayload;
 import com.zhangyongsic.framework.lib.constant.BaseCode;
+import com.zhangyongsic.framework.lib.constant.SystemConstant;
 import com.zhangyongsic.framework.lib.exception.BusinessException;
 import com.zhangyongsic.framework.shiro.entrance.JwtTokenHelper;
 import com.zhangyongsic.framework.shiro.entrance.PrincipalSupport;
@@ -50,7 +51,18 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
         if (StringUtils.isEmpty(token)) {
             throw new BusinessException(BaseCode.NO_AUTH);
         }
-        UserPrincipal userPrincipal = principalSupport.getPrincipalByToken(token);
+        UserPrincipal userPrincipal = principalSupport.getPrincipal(token);
+        if (SystemConstant.UserType.CUSTOMER.equals(userPrincipal.getUserType())){
+            if (userPrincipal.getCustomerPrincipal() == null){
+                throw new BusinessException(BaseCode.NO_AUTH);
+            }
+            if (SystemConstant.FAIL.equals(userPrincipal.getCustomerPrincipal().getCustomerAudit())){
+                throw new BusinessException(BaseCode.ACCOUNT_AUDIT);
+            }
+            if (SystemConstant.FAIL.equals(userPrincipal.getCustomerPrincipal().getCustomerForbidden())){
+                throw new BusinessException(BaseCode.ACCOUNT_FORBIDDEN);
+            }
+        }
         return new SimpleAuthenticationInfo(userPrincipal, token, userPrincipal.getUserName());
     }
 

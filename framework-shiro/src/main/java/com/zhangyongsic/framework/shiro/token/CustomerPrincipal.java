@@ -11,7 +11,9 @@ import java.io.Serializable;
  * @create: 2020/07/14
  */
 @Data
-public class LeaderPrincipal implements Serializable {
-    private String leaderId;
-    private String leaderName;
+public class CustomerPrincipal implements Serializable {
+    private String customerId;
+    private String customerName;
+    private String customerAudit;
+    private String customerForbidden;
 }

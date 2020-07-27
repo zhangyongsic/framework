@@ -13,6 +13,8 @@ public enum BaseCode implements BusinessCode {
     UNKNOWN("UNKNOWN","未知异常"),
     BUSY("BUSY","业务忙"),
     NO_AUTH("NO_AUTH","未登录"),
+    ACCOUNT_AUDIT("ACCOUNT_AUDIT","账号正在审核！"),
+    ACCOUNT_FORBIDDEN("ACCOUNT_FORBIDDEN","账号已禁用！"),
     USERNAME_OR_PASSWORD_ERROR("USERNAME_OR_PASSWORD_ERROR","用户名密码错误"),
     ;
     private String code;

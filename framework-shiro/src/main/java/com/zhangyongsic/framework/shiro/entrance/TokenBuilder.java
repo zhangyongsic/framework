@@ -46,7 +46,7 @@ public class TokenBuilder {
      * @return
      */
     public TokenVO refreshToken(String refreshToken) {
-        UserPrincipal userPrincipal = principalSupport.getPrincipalByToken(refreshToken);
+        UserPrincipal userPrincipal = principalSupport.getPrincipal(refreshToken);
         return createJwtToken(userPrincipal);
 
     }

@@ -4,6 +4,8 @@ package com.zhangyongsic.framework.lib.constant;
  * @author fanchao
  */
 public interface SystemConstant {
+    String SUCCESS = "SUCCESS";
+    String FAIL = "FAIL";
 
     interface Token {
         String AUTHORIZATION = "Authorization";
@@ -52,6 +54,11 @@ public interface SystemConstant {
          * B端PC商城
          */
         String B_PC = "B_PC";
+    }
+
+    interface UserType{
+        String USER = "USER";
+        String CUSTOMER = "CUSTOMER";
     }
 
 }
