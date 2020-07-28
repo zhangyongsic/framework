@@ -56,9 +56,9 @@ public class JwtAuthorizingRealm extends AuthorizingRealm {
             if (userPrincipal.getCustomerPrincipal() == null){
                 throw new BusinessException(BaseCode.NO_AUTH);
             }
-            if (SystemConstant.FAIL.equals(userPrincipal.getCustomerPrincipal().getCustomerAudit())){
-                throw new BusinessException(BaseCode.ACCOUNT_AUDIT);
-            }
+//            if (SystemConstant.FAIL.equals(userPrincipal.getCustomerPrincipal().getCustomerAudit())){
+//                throw new BusinessException(BaseCode.ACCOUNT_AUDIT);
+//            }
             if (SystemConstant.FAIL.equals(userPrincipal.getCustomerPrincipal().getCustomerForbidden())){
                 throw new BusinessException(BaseCode.ACCOUNT_FORBIDDEN);
             }

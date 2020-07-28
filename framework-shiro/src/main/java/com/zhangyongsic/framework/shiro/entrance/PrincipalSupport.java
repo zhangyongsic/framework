@@ -3,6 +3,7 @@ package com.zhangyongsic.framework.shiro.entrance;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.zhangyongsic.framework.encrypt.jwt.JwtPayload;
 import com.zhangyongsic.framework.lib.constant.BaseCode;
+import com.zhangyongsic.framework.lib.constant.SystemConstant;
 import com.zhangyongsic.framework.lib.exception.BusinessException;
 import com.zhangyongsic.framework.shiro.principal.IPrincipal;
 import com.zhangyongsic.framework.shiro.token.CustomerPrincipal;
@@ -49,6 +50,9 @@ public class PrincipalSupport implements IPrincipal {
         String userId = payload.getSub();
         String cacheKey = payload.getIss();
         UserPrincipal userPrincipal = getPrincipal(cacheKey,userId);
+        if (userPrincipal == null){
+            throw new BusinessException(BaseCode.NO_AUTH);
+        }
         // 认证refreshToken
         JwtTokenHelper.tokenAuth(userPrincipal.getJwtPrivateKey(), token);
         return userPrincipal;
@@ -57,13 +61,22 @@ public class PrincipalSupport implements IPrincipal {
     public UserPrincipal getPrincipal(String userKey, String userId){
         Object object = redisTemplate.opsForHash().get(userKey,userId);
         if (object == null){
-            throw new BusinessException(BaseCode.NO_AUTH);
+            return null;
         }
         return (UserPrincipal) object;
     }
 
     public void putPrincipal(UserPrincipal userPrincipal){
         redisTemplate.opsForHash().put(userPrincipal.getCacheKey(),userPrincipal.getUserId(),userPrincipal);
+    }
+
+
+    public void checkAudit(){
+        if (getCustomerPrincipal()!=null){
+            if (!SystemConstant.SUCCESS.equals(getCustomerPrincipal().getCustomerAudit())){
+                throw new BusinessException(BaseCode.ACCOUNT_AUDIT);
+            }
+        }
     }
 
     @Override
