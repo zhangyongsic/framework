@@ -8,6 +8,7 @@ import com.zhangyongsic.framework.shiro.filter.JwtAccessControlFilter;
 import com.zhangyongsic.framework.shiro.helper.ShiroPropertiesHelper;
 import com.zhangyongsic.framework.shiro.matcher.RetryLimitHashCredentialMatcher;
 import com.zhangyongsic.framework.shiro.realm.JwtAuthorizingRealm;
+import com.zhangyongsic.framework.shiro.realm.UnencryptedRealm;
 import com.zhangyongsic.framework.shiro.realm.UserNamePwdRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
@@ -67,6 +68,11 @@ public class ShiroConfigure {
         return usernamePasswordAuthorizingRealm;
     }
 
+    @Bean(name = "unencryptedRealm")
+    public UnencryptedRealm unencryptedRealm() {
+        return new UnencryptedRealm();
+    }
+
     /**
      * step-2-2
      * 定义jwt realm
@@ -101,6 +107,7 @@ public class ShiroConfigure {
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager securityManager(
             @Qualifier(value = "userNamePwdRealm") UserNamePwdRealm userNamePwdRealm,
+            @Qualifier(value = "unencryptedRealm") UnencryptedRealm unencryptedRealm,
             @Qualifier(value = "jwtAuthorizingRealm") JwtAuthorizingRealm jwtAuthorizingRealm,
             @Qualifier(value = "multiModularRealmAuthenticator") MultiModularRealmAuthenticator multiModularRealmAuthenticator) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -110,6 +117,7 @@ public class ShiroConfigure {
         //2.设置realms
         Set<Realm> realms = new HashSet<Realm>();
         realms.add(userNamePwdRealm);
+        realms.add(unencryptedRealm);
         realms.add(jwtAuthorizingRealm);
         securityManager.setRealms(realms);
 

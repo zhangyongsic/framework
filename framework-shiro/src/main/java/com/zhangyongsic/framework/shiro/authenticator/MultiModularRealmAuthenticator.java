@@ -3,8 +3,10 @@ package com.zhangyongsic.framework.shiro.authenticator;
 
 import com.zhangyongsic.framework.shiro.encrpty.ShiroEncrptyTool;
 import com.zhangyongsic.framework.shiro.realm.JwtAuthorizingRealm;
+import com.zhangyongsic.framework.shiro.realm.UnencryptedRealm;
 import com.zhangyongsic.framework.shiro.realm.UserNamePwdRealm;
 import com.zhangyongsic.framework.shiro.token.JwtAuthenticationToken;
+import com.zhangyongsic.framework.shiro.token.UnencryptedToken;
 import com.zhangyongsic.framework.shiro.token.UserPrincipal;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -47,6 +49,8 @@ public class MultiModularRealmAuthenticator extends ModularRealmAuthenticator {
         } else if (authenticationToken instanceof UsernamePasswordToken) {
             // UsernamePasswordToken
             activeRealm = realmMap.get(UserNamePwdRealm.class.getSimpleName());
+        }else if (authenticationToken instanceof UnencryptedToken){
+            activeRealm = realmMap.get(UnencryptedRealm.class.getSimpleName());
         }
         if (activeRealm != null) {
             AuthenticationInfo authenticationInfo = doSingleRealmAuthentication(activeRealm, authenticationToken);

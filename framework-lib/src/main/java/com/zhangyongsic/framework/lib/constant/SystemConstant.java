@@ -7,6 +7,11 @@ public interface SystemConstant {
     String SUCCESS = "SUCCESS";
     String FAIL = "FAIL";
 
+    interface Value{
+        String ONE = "1";
+        String ZERO = "0";
+    }
+
     interface Token {
         String AUTHORIZATION = "Authorization";
         String BEARER = "Bearer";
