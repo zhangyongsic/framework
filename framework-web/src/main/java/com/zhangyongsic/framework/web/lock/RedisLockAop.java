@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+
 /**
- * 多切面 order越小越是最先执行
- *
- * @author fanchao
+ * @program: framework
+ * @description: 多切面 order越小越是最先执行
+ * @author: zhang yong
+ * @create: 2020/08/11
  */
 @Aspect
 @Component

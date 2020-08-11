@@ -76,7 +76,7 @@ public class MultiModularRealmAuthenticator extends ModularRealmAuthenticator {
      */
     private void principalAddSecret(UserPrincipal userPrincipal) {
         // 生成一个 secret，该 secret 用来加密 jwt
-        String secret = ShiroEncrptyTool.getSalt(userPrincipal.getUserName(), 8);
+        String secret = ShiroEncrptyTool.getSalt(userPrincipal.getUserId(), 8);
         // userPrincipal
         userPrincipal.setJwtPrivateKey(secret);
     }
