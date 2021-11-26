@@ -2,11 +2,9 @@ package com.zhangyongsic.framework.wx.mp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhangyongsic.framework.lib.crypto.SHA1;
-import com.zhangyongsic.framework.lib.exception.BusinessException;
 import com.zhangyongsic.framework.lib.util.OKHttpHelper;
-import com.zhangyongsic.framework.lib.util.RandomUtils;
+import com.zhangyongsic.framework.lib.util.RandomHelper;
 import com.zhangyongsic.framework.wx.mp.entity.JsapiTicket;
-import com.zhangyongsic.framework.wx.mp.entity.WxAccessToken;
 import com.zhangyongsic.framework.wx.mp.entity.WxJsapiSignature;
 import com.zhangyongsic.framework.wx.mp.service.IWxMpService;
 import com.zhangyongsic.framework.wx.mp.service.IWxMpTicketService;
@@ -39,7 +37,7 @@ public class WxMpTicketServiceImpl implements IWxMpTicketService {
     @Override
     public WxJsapiSignature createJsapiSignature(String url) {
         long timestamp = System.currentTimeMillis() / 1000;
-        String randomStr = RandomUtils.getRandomStr();
+        String randomStr = RandomHelper.getRandomStr();
         String jsapiTicket = getJsapiTicket();
         String signature = SHA1.genWithAmple("jsapi_ticket=" + jsapiTicket,
                 "noncestr=" + randomStr, "timestamp=" + timestamp, "url=" + url);

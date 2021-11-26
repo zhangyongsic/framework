@@ -142,4 +142,9 @@ public class Digests {
         return hexValue.toString();
 
     }
+
+
+    public static void main(String[] args) {
+        System.out.println(string2MD5("admin123456GbTJ9DSj"));
+    }
 }
