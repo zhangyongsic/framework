@@ -1,7 +1,9 @@
 package com.zhangyongsic.framework.web;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhangyongsic.framework.lib.constant.BaseCode;
 import com.zhangyongsic.framework.lib.exception.BusinessCode;
+import com.zhangyongsic.framework.mybatisplus.util.PageUtil;
 import lombok.Data;
 
 /**
@@ -34,6 +36,12 @@ public class RtnHttp<T>{
     public static <T> RtnHttp ok(T data){
         RtnHttp rtnHttp =  new RtnHttp(BaseCode.OK);
         rtnHttp.setData(data);
+        return rtnHttp;
+    }
+
+    public static RtnHttp ok(IPage iPage){
+        RtnHttp rtnHttp =  new RtnHttp(BaseCode.OK);
+        rtnHttp.setData(PageUtil.out(iPage));
         return rtnHttp;
     }
 
