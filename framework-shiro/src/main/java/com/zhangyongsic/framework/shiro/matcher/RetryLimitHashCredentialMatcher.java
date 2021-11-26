@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 散列加密限制用户输入密码错误次数
- * @author fanchao
+ * @author zhang yong
  */
 public class RetryLimitHashCredentialMatcher extends HashedCredentialsMatcher {
 

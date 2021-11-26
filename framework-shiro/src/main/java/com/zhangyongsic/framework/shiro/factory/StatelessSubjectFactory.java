@@ -6,7 +6,7 @@ import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
 
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 public class StatelessSubjectFactory extends DefaultWebSubjectFactory {
 

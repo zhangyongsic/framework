@@ -21,7 +21,7 @@ import java.util.Map;
 
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 //@Component(value = "multiModularRealmAuthenticator")
 public class MultiModularRealmAuthenticator extends ModularRealmAuthenticator {

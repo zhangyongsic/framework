@@ -1,7 +1,7 @@
 package com.zhangyongsic.framework.lib.constant;
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 public interface SystemConstant {
     String SUCCESS = "SUCCESS";

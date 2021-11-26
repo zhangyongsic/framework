@@ -5,7 +5,7 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 public class ShiroEncrptyTool {
 

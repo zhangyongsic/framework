@@ -8,7 +8,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 @Data
 @ToString

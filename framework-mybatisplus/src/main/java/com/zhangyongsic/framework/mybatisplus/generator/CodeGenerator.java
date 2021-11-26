@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 public class CodeGenerator {
 

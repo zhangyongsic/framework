@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 @Slf4j
 public class JwtAuthorizingRealm extends AuthorizingRealm {

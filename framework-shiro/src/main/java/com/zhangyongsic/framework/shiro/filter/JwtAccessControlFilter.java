@@ -19,7 +19,7 @@ import java.io.IOException;
 
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 @Slf4j
 public class JwtAccessControlFilter extends AccessControlFilter {

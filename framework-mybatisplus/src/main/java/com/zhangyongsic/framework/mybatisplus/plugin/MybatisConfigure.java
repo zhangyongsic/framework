@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 @Configuration
 public class MybatisConfigure {

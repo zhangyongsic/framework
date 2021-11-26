@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * @author fanchao
+ * @author zhang yong
  */
 @Configuration
 @ConditionalOnClass(RedisConfigure.class)

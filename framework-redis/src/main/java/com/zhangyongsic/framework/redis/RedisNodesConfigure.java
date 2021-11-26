@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 集群节点配置
  *
- * @author fanchao
+ * @author zhang yong
  */
 @Configuration(value = "redisNodes")
 @ConfigurationProperties(prefix = "spring.redis.cluster")

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis锁
  *
- * @author fanchao
+ * @author zhang yong
  */
 @Component("redisLockSupport")
 public class RedisLockSupport {
