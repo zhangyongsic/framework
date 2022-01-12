@@ -69,8 +69,10 @@ public class RsaDigestsHelper {
         System.out.println("私钥:" + rsaKeyPair.getBase64PrivateKey());
         String publicKey = rsaKeyPair.getBase64PublicKey();
         String privateKey = rsaKeyPair.getBase64PrivateKey();
-        byte[] encrypted = encryptByPublicKey(publicKey, "123456".getBytes());
-        String decode = new String(decryptByPrivateKey(privateKey, encrypted));
+        byte[] encrypted = encryptByPublicKey("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCb1MN73RlFgsEi0+HSU3ZgCrY6LYPjwaUZcyOFO3nh9IVW1FerraOYLyxm89aCr/nljyXq5Ag0AOIWltoYx3RKTvngrOvpCeVn9g6a3tDJ8/OUqy7CHBTjRlPTOIWdF3KMWIF+XTckyrPyoPs9YSRzis1pHeZH3ccWBDIlUsRHhQIDAQAB", "123456".getBytes());
+        String prk = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANccMhTDw3R6c7OLDDpLed84Zbw18QkR0v4JQrZCXaMlYNH9awjcQBFCrU/ZBeM5iQWkbVnxL10+rE0U1Ciyb+O7vpAARVBbtoULpKNPLG7UG9yZcHs73U2hy5ByPIJWev/Qk97S/zvpU/ShUs5xSAncVFhUEV3S7YIXZd06B4ZFAgMBAAECgYAkN3EPIe6Ue9FjFzQV1INOW9Z1G7fbSQ73CmQa/414XGCyujH9Kef3f/xiBy4Alb1GH+rxS7QnxNeJmsoll/VSWSNC+PUyWVFOIeuQ692d0q2sfCF6Ck5T9DCCQOcX0rK+gDYwQJjDIdmS68KptbWixuMaopicSa3qnQf4eqeCgQJBAPtPbi5jM6zz0YG4oQo3saY4M3nUqf4PSwmyLu9ix/gAmDIg9x/kbymnaHPdye4P3mPIqZa53HvRIZZgbGQC99ECQQDbH9QXY7qfjHhZBWrrS3i6uyvLzrdmiYPD8DZHMVF1evrsV4RhjYMMUFQvjgploU42wBTgn/b2c1+9VJFNjLg1AkEAql1yiCfgBENVp+cN5OtUlyZKXzD3/K9JY01T3BzPCyT8CB+o6AnoAgjnGoUkOyquzF5f+ToOajGf312GnVYVwQJBAMfWwj3GlTfXCxbc6wLF5Mgf1TRdRUO9XC9BDq9k2g6TZu5ObovtXDvJss1f9Dl1n/gsu52UJc3jsMfhrVaVZJUCQFC7JG79Z4da6FrapkF/zNy0foBX4W3ibNEbmYpRehdwyRby/qn5ckQE0X0FSOTHgOudUX0m2r42lQCxOW/Yspk=231121198502204917_董镭_18290419712";
+        String dfd = "QghwY+Y5ovhjqw56UOyfSzQa66N9PPUvG/vYCefdvukfa6QWZoKHAH/uwrF6bbnohXwwi1sBbROQbE76oIM+4HW12fJdunwPTNFjuXrOzYlHZ9sa4lw0ct0SanNAt8ELHnCKPUIwTVXF/yk6GGqwK8C4vHfQYuwXVmuxmC/C6jg=";
+        String decode = decryptByPrivateKey(prk, dfd);
         System.out.println(decode);
     }
 
@@ -143,6 +145,7 @@ public class RsaDigestsHelper {
                 return new String(plain);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
         return null;

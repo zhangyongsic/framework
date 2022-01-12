@@ -6,6 +6,9 @@ import org.springframework.beans.BeanUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Bean 处理
+ */
 public class BeanHelper extends BeanUtils {
 
     public static <T> T copyProperties(Object object, Class<T> tClass) {
