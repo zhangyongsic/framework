@@ -1,11 +1,14 @@
 package com.zhangyongsic.framework.lib.rsa;
 
+import com.zhangyongsic.framework.lib.exception.BusinessException;
+import com.zhangyongsic.framework.lib.exception.SystemException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -31,6 +34,9 @@ public class RsaDigestsHelper {
      * RSA最大解密密文大小
      */
     private static int RSA_MAX_DECRYPT_BLOCK = 128;
+
+    private static String base64PublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC1JViPSBPI7ox+aUO66xfYYuioLdSMlDrBaVZf+utXB3okk3rfqR38AK7Zigd7kiWZkPNY4S0tfcD2DuGyifj1JE+NnYickg8ssOHn1C7Gi3GdvBn93oX5JDwcNCu1bYkrEkm+Ar9EvjSbHMC0w5ehj6JWNPSncKqD+zSO5ptz1QIDAQAB";
+    private static String base64PrivateKey = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALUlWI9IE8jujH5pQ7rrF9hi6Kgt1IyUOsFpVl/661cHeiSTet+pHfwArtmKB3uSJZmQ81jhLS19wPYO4bKJ+PUkT42diJySDyyw4efULsaLcZ28Gf3ehfkkPBw0K7VtiSsSSb4Cv0S+NJscwLTDl6GPolY09KdwqoP7NI7mm3PVAgMBAAECgYA6RcXL7fFjaY3rmnxN1JPqqcLTW07tXD/ceUDuhl8Ps5mQy5qy+YnqR+P3miYXE+ghkxYdaO6qHDKnVRk44Jaj5abt6QOezSzjdrBOEBD8/MVq6Oas1zrXOEfChNBcxu5tFgm2IfENvCrhswt75dRU3zfUDKXkOZzm8k1OzfqdzwJBAPjVy+zoWpNqFBFhXfZTE3WJoGikVmeVKg0r7QhmkW8skz7tXTiE1981n4cBSe+F1wHtn1ou6ITPxMJxf8uLyb8CQQC6XJneUBTQXdKO7hZruLpLlBMhbJxlyvkBZpg8RHmEhMX2aEgxYofcnVgmc29Bt0haIIbWFgd+Fp292xUKQB9rAkBg5ljIQ99pwohYEFOX5dgREGwf88cWBTdf87gVamO+KFyax7JinRC3gllCKJVTKgqFXLSOWPABMCuOEMbUS/ZfAkEAmQGUNwlKvXR6fm0NrW2iTpEJT+TrV0vZOwQvszOJDXsxSUh/FUTPRRtOF2upCaxgU9bmvXiiuCv7YLgxwxO4dwJBAKyWq3bGhNSjhO5aOxycnprrLJ6+89cA0FGZJo/8fir0MUL/+B7XzFX7gMO4HYx0Lped+GwjI/2RBtK2kRmVblk=";
 
     /**
      * 第三方算法提供程序 加解密能够通用
@@ -64,16 +70,13 @@ public class RsaDigestsHelper {
     }
 
     public static void main(String[] args) throws Exception {
-        RsaKeyPair rsaKeyPair = getStringKeyPair();
-        System.out.println("公钥:" + rsaKeyPair.getBase64PublicKey());
-        System.out.println("私钥:" + rsaKeyPair.getBase64PrivateKey());
-        String publicKey = rsaKeyPair.getBase64PublicKey();
-        String privateKey = rsaKeyPair.getBase64PrivateKey();
-        byte[] encrypted = encryptByPublicKey("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCb1MN73RlFgsEi0+HSU3ZgCrY6LYPjwaUZcyOFO3nh9IVW1FerraOYLyxm89aCr/nljyXq5Ag0AOIWltoYx3RKTvngrOvpCeVn9g6a3tDJ8/OUqy7CHBTjRlPTOIWdF3KMWIF+XTckyrPyoPs9YSRzis1pHeZH3ccWBDIlUsRHhQIDAQAB", "123456".getBytes());
-        String prk = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANccMhTDw3R6c7OLDDpLed84Zbw18QkR0v4JQrZCXaMlYNH9awjcQBFCrU/ZBeM5iQWkbVnxL10+rE0U1Ciyb+O7vpAARVBbtoULpKNPLG7UG9yZcHs73U2hy5ByPIJWev/Qk97S/zvpU/ShUs5xSAncVFhUEV3S7YIXZd06B4ZFAgMBAAECgYAkN3EPIe6Ue9FjFzQV1INOW9Z1G7fbSQ73CmQa/414XGCyujH9Kef3f/xiBy4Alb1GH+rxS7QnxNeJmsoll/VSWSNC+PUyWVFOIeuQ692d0q2sfCF6Ck5T9DCCQOcX0rK+gDYwQJjDIdmS68KptbWixuMaopicSa3qnQf4eqeCgQJBAPtPbi5jM6zz0YG4oQo3saY4M3nUqf4PSwmyLu9ix/gAmDIg9x/kbymnaHPdye4P3mPIqZa53HvRIZZgbGQC99ECQQDbH9QXY7qfjHhZBWrrS3i6uyvLzrdmiYPD8DZHMVF1evrsV4RhjYMMUFQvjgploU42wBTgn/b2c1+9VJFNjLg1AkEAql1yiCfgBENVp+cN5OtUlyZKXzD3/K9JY01T3BzPCyT8CB+o6AnoAgjnGoUkOyquzF5f+ToOajGf312GnVYVwQJBAMfWwj3GlTfXCxbc6wLF5Mgf1TRdRUO9XC9BDq9k2g6TZu5ObovtXDvJss1f9Dl1n/gsu52UJc3jsMfhrVaVZJUCQFC7JG79Z4da6FrapkF/zNy0foBX4W3ibNEbmYpRehdwyRby/qn5ckQE0X0FSOTHgOudUX0m2r42lQCxOW/Yspk=231121198502204917_董镭_18290419712";
-        String dfd = "QghwY+Y5ovhjqw56UOyfSzQa66N9PPUvG/vYCefdvukfa6QWZoKHAH/uwrF6bbnohXwwi1sBbROQbE76oIM+4HW12fJdunwPTNFjuXrOzYlHZ9sa4lw0ct0SanNAt8ELHnCKPUIwTVXF/yk6GGqwK8C4vHfQYuwXVmuxmC/C6jg=";
-        String decode = decryptByPrivateKey(prk, dfd);
-        System.out.println(decode);
+//        RsaKeyPair rsaKeyPair = getStringKeyPair();
+//        System.out.println("公钥:" + rsaKeyPair.getBase64PublicKey());
+//        System.out.println("私钥:" + rsaKeyPair.getBase64PrivateKey());
+
+        String eee = encryptByPublicKey("张雨生是");
+        System.out.println("加密信息："+eee);
+        System.out.println("加密信息："+decryptByPrivateKey(eee));
     }
 
     /**
@@ -117,38 +120,45 @@ public class RsaDigestsHelper {
             RSAPublicKey publicKey = getRsaPublicKey(base64PublicKey);
             return segment(publicKey, source, RSA_MAX_ENCRYPT_BOLCK, Cipher.ENCRYPT_MODE);
         }
-        return null;
+        throw SystemException.ENCRYPT_EXCEPTION;
     }
 
+
+    public static String encryptByPublicKey(String base64PublicKey, String source) throws Exception {
+        if (StringUtils.isNotBlank(source)){
+            return Base64.encodeBase64String(encryptByPublicKey(base64PublicKey,source.getBytes()));
+        }
+        throw SystemException.ENCRYPT_EXCEPTION;
+    }
+
+    public static String encryptByPublicKey(String source) throws Exception {
+        return encryptByPublicKey(base64PublicKey,source);
+    }
     /**
      * 私钥解密
      *
      * @param base64PrivateKey 私钥
      * @param encryptData      密文数据
-     * @return
-     * @throws Exception
      */
-    public static byte[] decryptByPrivateKey(String base64PrivateKey, byte[] encryptData) throws Exception {
+    public static byte[] decryptByPrivateKey(String base64PrivateKey, byte[] encryptData) throws Exception{
         if (StringUtils.isNotEmpty(base64PrivateKey) && encryptData.length > 0) {
             RSAPrivateKey privateKey = getRsaPrivateKey(base64PrivateKey);
             return segment(privateKey, encryptData, RSA_MAX_DECRYPT_BLOCK, Cipher.DECRYPT_MODE);
         }
-        return null;
+        throw SystemException.DECRYPT_EXCEPTION;
     }
 
-    public static String decryptByPrivateKey(String base64PrivateKey, String base64EncryptData) {
-        try {
-            if (StringUtils.isNotEmpty(base64PrivateKey) && StringUtils.isNotBlank(base64EncryptData)) {
-                RSAPrivateKey privateKey = getRsaPrivateKey(base64PrivateKey);
-                byte[] encryptData = Base64.decodeBase64(base64EncryptData.getBytes());
-                byte[] plain = segment(privateKey, encryptData, RSA_MAX_DECRYPT_BLOCK, Cipher.DECRYPT_MODE);
-                return new String(plain);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+    public static String decryptByPrivateKey(String base64PrivateKey, String base64EncryptData) throws Exception{
+        if (StringUtils.isNotBlank(base64EncryptData)){
+            byte[] encryptData = Base64.decodeBase64(base64EncryptData.getBytes());
+            return new String(decryptByPrivateKey(base64PrivateKey,encryptData));
         }
-        return null;
+        throw SystemException.DECRYPT_EXCEPTION;
+    }
+
+
+    public static String decryptByPrivateKey(String base64EncryptData) throws Exception{
+       return decryptByPrivateKey(base64PrivateKey,base64EncryptData);
     }
 
     /**
